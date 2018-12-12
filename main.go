@@ -9,6 +9,9 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot/httphandler"
 )
 
+type CustomMessage struct {
+}
+
 func main() {
 	handler, err := httphandler.New(
 		os.Getenv("CHANNEL_SECRET"),
@@ -30,6 +33,7 @@ func main() {
 		for _, event := range events {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
+				log.Print(linebot.NewTextMessage(message.Text))
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
