@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-	log.Print(os.Getenv("CHANNEL_SECRET"), os.Getenv("CHANNEL_TOKEN"))
 	handler, err := httphandler.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
@@ -21,6 +20,9 @@ func main() {
 
 	// Setup HTTP Server for receiving requests from LINE platform
 	handler.HandleEvents(func(events []*linebot.Event, r *http.Request) {
+
+		log.Print(r)
+
 		bot, err := handler.NewClient()
 		if err != nil {
 			log.Print(err)
@@ -36,9 +38,7 @@ func main() {
 	})
 
 	http.Handle("/callback", handler)
-	//http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-	//	return
-	//})
+
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
