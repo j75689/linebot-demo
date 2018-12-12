@@ -33,7 +33,8 @@ func main() {
 		for _, event := range events {
 			switch message := event.Message.(type) {
 			case *linebot.TextMessage:
-				log.Print(linebot.NewTextMessage(message.Text))
+				b, _ := linebot.NewTextMessage(message.Text).MarshalJSON()
+				log.Print(string(b))
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 					log.Print(err)
 				}
