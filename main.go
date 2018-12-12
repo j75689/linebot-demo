@@ -35,10 +35,10 @@ func main() {
 		}
 	})
 
-	//http.Handle("/callback", handler)
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		return
-	})
+	http.Handle("/callback", handler)
+	//http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
+	//	return
+	//})
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		log.Fatal(err)
 	}
