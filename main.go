@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -24,9 +23,10 @@ func main() {
 	})
 	// Setup HTTP Server for receiving requests from LINE platform
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
+		log.Print(req)
 		events, err := bot.ParseRequest(req)
 		if err != nil {
-			fmt.Print(err)
+			log.Print(err)
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
 			} else {
